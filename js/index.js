@@ -228,7 +228,7 @@ function fib(fib0, fib1, level) {
 
 // --------------------- percentage function -----------------------
 function percentage(entry, exit) {
-        return (((exit - entry) / entry));
+        return Math.abs((((exit - entry) / entry)));
 }
 
 // --------------------- leverage function -----------------------
@@ -254,3 +254,10 @@ function clearAll() {
 function clearOutput() {
     document.querySelector(".item").innerHTML = '';
 }
+
+// --------------------- keyboard: enter  -----------------------
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('button1').click();
+    }
+});
