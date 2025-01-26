@@ -13,10 +13,125 @@ document.getElementById('input2').value = '0.9842';
 document.getElementById('input3').value = -0.5;
 document.getElementById('input4').value = 1.618;
 
+document.getElementById('dist1').value = 20;
+document.getElementById('dist2').value = 20;
+document.getElementById('dist3').value = 20;
+document.getElementById('dist4').value = 40;
 
 document.getElementById('button1').addEventListener('click', function() {
+    output();
 
-    // ------------------------------------------------------
+});
+
+button2.addEventListener('click', function() {
+    clearAll();
+});
+
+// ----------- event listener: change button color ---------------
+document.addEventListener("DOMContentLoaded", () => {
+    // const input1 = document.getElementById("input1");
+    // const input2 = document.getElementById("input2");
+    const button = document.getElementById("button1");
+
+    const input0 = document.getElementById('input0');
+    const input1 = document.getElementById('input1');
+    const input2 = document.getElementById('input2');
+    const input3 = document.getElementById('input3');
+    const input4 = document.getElementById('input4');
+    const dist1 = document.getElementById('dist1');
+    const dist2 = document.getElementById('dist2');
+    const dist3 = document.getElementById('dist3');
+    const dist4 = document.getElementById('dist4');
+
+
+    const updateButtonColor = () => {
+        const value1 = parseFloat(input1.value) || 0;
+        const value2 = parseFloat(input2.value) || 0;
+
+        if (value1 < value2) {
+            button.style.backgroundColor = "#0BB797";
+            // console.log("green");
+        } else {
+            button.style.backgroundColor = "#E85151";
+            // console.log("red");
+        }
+
+        console.log("Change");
+        clearOutput();
+        output();
+
+    };
+
+    input0.addEventListener("input", updateButtonColor);
+    input1.addEventListener("input", updateButtonColor);
+    input2.addEventListener("input", updateButtonColor);
+    input3.addEventListener("input", updateButtonColor);
+    input4.addEventListener("input", updateButtonColor);
+    dist1.addEventListener("input", updateButtonColor);
+    dist2.addEventListener("input", updateButtonColor);
+    dist3.addEventListener("input", updateButtonColor);
+    dist4.addEventListener("input", updateButtonColor);
+})
+
+// ----------------- get precision function ----------------------
+function getPrecision(n) {
+    // const xStr = n.toString();
+    const xStr = n;
+    if (xStr.includes('.')) {
+        return xStr.split('.')[1].length;
+    } else {
+        return 0;
+    }
+}
+
+// ------------------------- fib function -------------------------
+// fib0: price at fib0
+// fib1: price at fib1
+// level: target fib level
+// return: price at fib level
+function fib(fib0, fib1, level) {
+    return fib0 + (fib1 - fib0) * level;
+}
+
+// --------------------- percentage function -----------------------
+function percentage(entry, exit) {
+        return Math.abs((((exit - entry) / entry)));
+}
+
+// --------------------- leverage function -----------------------
+function leverage(effective_change, price_change) {
+    return Math.abs(parseInt((effective_change / (price_change * 100))));
+}
+
+// --------------------- clear all function -----------------------
+function clearAll() {
+    document.getElementById('input1').value = '';
+    document.getElementById('input2').value = '';
+
+    document.getElementById('input0').value = 10;
+    document.getElementById('input3').value = -0.5;
+    document.getElementById('input4').value = 1.618;
+
+    // document.getElementById('output1').innerText = '';
+    document.getElementById("button1").style.backgroundColor = "#474747";
+    document.querySelector(".item").innerHTML = '';
+}
+
+// --------------------- clear output function -----------------------
+function clearOutput() {
+    document.querySelector(".item").innerHTML = '';
+}
+
+// --------------------- keyboard: enter  -----------------------
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('button1').click();
+    }
+});
+
+
+function output() {
+        // ------------------------------------------------------
     // creating items in .item div
     // ------------------------------------------------------
     document.querySelector(".item").innerHTML = '';
@@ -49,11 +164,18 @@ document.getElementById('button1').addEventListener('click', function() {
     const entry3 = fib(fib0, fib1, 0.382);
     const entry4 = fib(fib0, fib1, 0);
 
+    const dist1_percentage = parseInt(document.getElementById('dist1').value) / 100;
+    const dist2_percentage = parseInt(document.getElementById('dist2').value) / 100;
+    const dist3_percentage = parseInt(document.getElementById('dist3').value) / 100;
+    const dist4_percentage = parseInt(document.getElementById('dist4').value) / 100;
+
+    console.log(dist4_percentage);
+
     const margin = parseFloat(document.getElementById('input0').value);
-    const dist1 = margin * 0.2;
-    const dist2 = margin * 0.2;
-    const dist3 = margin * 0.2;
-    const dist4 = margin * 0.4;
+    const dist1 = margin * dist1_percentage;
+    const dist2 = margin * dist2_percentage;
+    const dist3 = margin * dist3_percentage;
+    const dist4 = margin * dist4_percentage;
     const risk  = 10;
 
     // const margin;
@@ -169,95 +291,4 @@ document.getElementById('button1').addEventListener('click', function() {
     // output2.innerHTML += '<br>dist4: $' + dist4.toFixed(2);
 
     output2.innerHTML += '<br>';
-
-
-
-
-
-});
-
-button2.addEventListener('click', function() {
-    clearAll();
-});
-
-// ----------- event listener: change button color ---------------
-document.addEventListener("DOMContentLoaded", () => {
-    const input1 = document.getElementById("input1");
-    const input2 = document.getElementById("input2");
-    const button = document.getElementById("button1");
-
-    const updateButtonColor = () => {
-        const value1 = parseFloat(input1.value) || 0;
-        const value2 = parseFloat(input2.value) || 0;
-
-        if (value1 < value2) {
-            button.style.backgroundColor = "#0BB797";
-            // console.log("green");
-        } else {
-            button.style.backgroundColor = "#E85151";
-            // console.log("red");
-        }
-
-        console.log("Change");
-        clearOutput();
-    };
-
-    input1.addEventListener("input", updateButtonColor);
-    input2.addEventListener("input", updateButtonColor);
-})
-
-// ----------------- get precision function ----------------------
-function getPrecision(n) {
-    // const xStr = n.toString();
-    const xStr = n;
-    if (xStr.includes('.')) {
-        return xStr.split('.')[1].length;
-    } else {
-        return 0;
-    }
 }
-
-// ------------------------- fib function -------------------------
-// fib0: price at fib0
-// fib1: price at fib1
-// level: target fib level
-// return: price at fib level
-function fib(fib0, fib1, level) {
-    return fib0 + (fib1 - fib0) * level;
-}
-
-// --------------------- percentage function -----------------------
-function percentage(entry, exit) {
-        return Math.abs((((exit - entry) / entry)));
-}
-
-// --------------------- leverage function -----------------------
-function leverage(effective_change, price_change) {
-    return Math.abs(parseInt((effective_change / (price_change * 100))));
-}
-
-// --------------------- clear all function -----------------------
-function clearAll() {
-    document.getElementById('input1').value = '';
-    document.getElementById('input2').value = '';
-
-    document.getElementById('input0').value = 10;
-    document.getElementById('input3').value = -0.5;
-    document.getElementById('input4').value = 1.618;
-
-    // document.getElementById('output1').innerText = '';
-    document.getElementById("button1").style.backgroundColor = "#474747";
-    document.querySelector(".item").innerHTML = '';
-}
-
-// --------------------- clear output function -----------------------
-function clearOutput() {
-    document.querySelector(".item").innerHTML = '';
-}
-
-// --------------------- keyboard: enter  -----------------------
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        document.getElementById('button1').click();
-    }
-});
