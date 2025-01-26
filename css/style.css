@@ -32,7 +32,13 @@ body {
 
 /* Form group styling */
 .form-group {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    /* margin-bottom: 20px;  */
+
 }
 
 .inputs {
@@ -66,6 +72,13 @@ input[type="number"]:focus {
     border-color: rgba(93, 86, 19, 0.544);
 }
 
+.inputs1, .inputs2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+}
+
 /* Button styling */
 button {
     background-color: #474747;
@@ -77,6 +90,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 48%;
+    /* display: block; */
 }
 
 #button1:hover {
