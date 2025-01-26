@@ -8,8 +8,8 @@ const fibStops = [-0.382, -0.5, -0.236];
 const fibProfits = [1.0, 1.272, 1.414, 1.618, 2.618, 3.618];
 
 document.getElementById('input0').value = 10;
-document.getElementById('input1').value = '0.9800';
-document.getElementById('input2').value = '0.9842';
+document.getElementById('input1').value = '0.9867';
+document.getElementById('input2').value = '0.9817';
 document.getElementById('input3').value = -0.5;
 document.getElementById('input4').value = 1.618;
 
@@ -95,7 +95,7 @@ function fib(fib0, fib1, level) {
 
 // --------------------- percentage function -----------------------
 function percentage(entry, exit) {
-        return Math.abs((((exit - entry) / entry)));
+        return ((((exit - entry) / entry)));
 }
 
 // --------------------- leverage function -----------------------
@@ -129,9 +129,11 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-
+// -------------------------------------------------------------------------
+//                     output function
+// -------------------------------------------------------------------------
 function output() {
-        // ------------------------------------------------------
+    // ------------------------------------------------------
     // creating items in .item div
     // ------------------------------------------------------
     document.querySelector(".item").innerHTML = '';
@@ -189,13 +191,24 @@ function output() {
     const output1 = document.getElementById("output1");
     output1.innerHTML += 'ENTRIES:<br>';
 
+    const value1 = parseFloat(input1.value) || 0;
+    const value2 = parseFloat(input2.value) || 0;
+    let sign = 1;
+    if (value1 < value2) {
+        // long
+        sign = 1;
+    } else {
+        // short
+        sign = -1;
+    }
+
     // -------------------------------- entry 1 --------------------------------
     output1.innerHTML += '1: (' + entry1.toFixed(precision) + ')';
     output1.innerHTML += ' ' + leverage(risk, percentage(entry1, stoploss)) + 'x';
     output1.innerHTML += ' $' + dist1;
 
-    const loss_1 = dist1 * leverage(risk, percentage(entry1, stoploss)) * percentage(entry1, stoploss);
-    const profit_1 = dist1 * leverage(risk, percentage(entry1, stoploss)) * percentage(entry1, takeprofit);
+    const loss_1 = dist1 * leverage(risk, percentage(entry1, stoploss)) * percentage(entry1, stoploss) * sign;
+    const profit_1 = dist1 * leverage(risk, percentage(entry1, stoploss)) * percentage(entry1, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_1.toFixed(2) + ' : ' + '$' + profit_1.toFixed(2);
 
     // -------------------------------- entry 2 -------------------------------- 
@@ -203,8 +216,8 @@ function output() {
     output1.innerHTML += ' ' + leverage(risk, percentage(entry2, stoploss)) + 'x';
     output1.innerHTML += ' $' + dist2;
 
-    const loss_2 = dist2 * leverage(risk, percentage(entry2, stoploss)) * percentage(entry2, stoploss);
-    const profit_2 = dist2 * leverage(risk, percentage(entry2, stoploss)) * percentage(entry2, takeprofit);
+    const loss_2 = dist2 * leverage(risk, percentage(entry2, stoploss)) * percentage(entry2, stoploss) * sign;
+    const profit_2 = dist2 * leverage(risk, percentage(entry2, stoploss)) * percentage(entry2, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_2.toFixed(2) + ' : ' + '$' + profit_2.toFixed(2);
 
     // -------------------------------- entry 3 -------------------------------- 
@@ -212,8 +225,8 @@ function output() {
     output1.innerHTML += ' ' + leverage(risk, percentage(entry3, stoploss)) + 'x';
     output1.innerHTML += ' $' + dist3;
 
-    const loss_3 = dist3 * leverage(risk, percentage(entry3, stoploss)) * percentage(entry3, stoploss);
-    const profit_3 = dist3 * leverage(risk, percentage(entry3, stoploss)) * percentage(entry3, takeprofit);
+    const loss_3 = dist3 * leverage(risk, percentage(entry3, stoploss)) * percentage(entry3, stoploss) * sign;
+    const profit_3 = dist3 * leverage(risk, percentage(entry3, stoploss)) * percentage(entry3, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_3.toFixed(2) + ' : ' + '$' + profit_3.toFixed(2);
 
     // -------------------------------- entry 4 -------------------------------- 
@@ -221,8 +234,8 @@ function output() {
     output1.innerHTML += ' ' + leverage(risk, percentage(entry4, stoploss)) + 'x';    
     output1.innerHTML += ' $' + dist4;
 
-    const loss_4 = dist4 * leverage(risk, percentage(entry4, stoploss)) * percentage(entry4, stoploss);
-    const profit_4 = dist4 * leverage(risk, percentage(entry4, stoploss)) * percentage(entry4, takeprofit);
+    const loss_4 = dist4 * leverage(risk, percentage(entry4, stoploss)) * percentage(entry4, stoploss) * sign;
+    const profit_4 = dist4 * leverage(risk, percentage(entry4, stoploss)) * percentage(entry4, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_4.toFixed(2) + ' : ' + '$' + profit_4.toFixed(2);
 
     // -------------------------------- stoploss | takeprofit -------------------------------- 
