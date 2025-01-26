@@ -1,0 +1,18 @@
+{
+  "name": "dca",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.5"
+  },
+  "dependencies": {
+    "@paddlejs-models/ocr": "^1.2.4",
+    "@paddlejs/paddlejs-core": "^2.2.0"
+  }
+}

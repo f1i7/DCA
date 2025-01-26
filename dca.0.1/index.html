@@ -1,0 +1,48 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="src/style.css">
+    <title>Checkbox and Input</title>
+</head>
+<body>
+    <div class="left-container">
+
+
+        <h1>DCA</h1>
+        <div class="form-group">
+            <div class="inputs">
+                <input type="number" placeholder="Capital" id="input0">
+                <input type="number" placeholder="0.0" id="input1">
+                <input type="number" placeholder="1.0" id="input2">
+            </div>
+            <button id="button1">Fib</button>
+        </div>
+
+        <div class="radio-group">
+            <input type="radio" id="radio1" name="radio-group" value="Option1">
+            <label for="radio1">1</label>
+            
+            <input type="radio" id="radio2" name="radio-group" value="Option2">
+            <label for="radio2">2</label>
+            
+            <input type="radio" id="radio3" name="radio-group" value="Option3">
+            <label for="radio3">3</label>
+        </div>
+
+        <div class="item">
+            <p id="output1"></p>
+        </div>
+    </div>
+    <div class="right-container" id="side">
+        <div><kbd class="key">Ctrl</kbd> + <kbd class="key">V</kbd></div>
+        <img class="preview" id="preview" />
+    </div>
+
+    <!-- v5 -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+    <script src="src/main.js"></script>
+</body>
+</html>
