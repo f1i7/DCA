@@ -202,40 +202,54 @@ function output() {
         sign = -1;
     }
 
+    const fixed_leverage = (
+        leverage(risk, percentage(entry1, stoploss)) * dist1 +
+        leverage(risk, percentage(entry2, stoploss)) * dist2 +
+        leverage(risk, percentage(entry3, stoploss)) * dist3 +
+        leverage(risk, percentage(entry4, stoploss)) * dist4
+    ) / (dist1 + dist2 + dist3 + dist4);
+
+    // const fixed_leverage = (
+    //     leverage(risk, percentage(entry1, stoploss))+
+    //     leverage(risk, percentage(entry2, stoploss))+
+    //     leverage(risk, percentage(entry3, stoploss))+
+    //     leverage(risk, percentage(entry4, stoploss))    
+    // ) / 4;
+
     // -------------------------------- entry 1 --------------------------------
     output1.innerHTML += '1: (' + entry1.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + leverage(risk, percentage(entry1, stoploss)) + 'x';
+    output1.innerHTML += ' ' + fixed_leverage + 'x';
     output1.innerHTML += ' $' + dist1;
-
-    const loss_1 = dist1 * leverage(risk, percentage(entry1, stoploss)) * percentage(entry1, stoploss) * sign;
-    const profit_1 = dist1 * leverage(risk, percentage(entry1, stoploss)) * percentage(entry1, takeprofit) * sign;
+    
+    const loss_1 = dist1 * fixed_leverage * percentage(entry1, stoploss) * sign;
+    const profit_1 = dist1 * fixed_leverage * percentage(entry1, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_1.toFixed(2) + ' : ' + '$' + profit_1.toFixed(2);
 
     // -------------------------------- entry 2 -------------------------------- 
     output1.innerHTML += '<br>' + '2: (' + entry2.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + leverage(risk, percentage(entry2, stoploss)) + 'x';
+    output1.innerHTML += ' ' + fixed_leverage + 'x';
     output1.innerHTML += ' $' + dist2;
 
-    const loss_2 = dist2 * leverage(risk, percentage(entry2, stoploss)) * percentage(entry2, stoploss) * sign;
-    const profit_2 = dist2 * leverage(risk, percentage(entry2, stoploss)) * percentage(entry2, takeprofit) * sign;
+    const loss_2 = dist2 * fixed_leverage * percentage(entry2, stoploss) * sign;
+    const profit_2 = dist2 * fixed_leverage * percentage(entry2, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_2.toFixed(2) + ' : ' + '$' + profit_2.toFixed(2);
 
     // -------------------------------- entry 3 -------------------------------- 
     output1.innerHTML += '<br>' + '3: (' + entry3.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + leverage(risk, percentage(entry3, stoploss)) + 'x';
+    output1.innerHTML += ' ' + fixed_leverage + 'x';
     output1.innerHTML += ' $' + dist3;
 
-    const loss_3 = dist3 * leverage(risk, percentage(entry3, stoploss)) * percentage(entry3, stoploss) * sign;
-    const profit_3 = dist3 * leverage(risk, percentage(entry3, stoploss)) * percentage(entry3, takeprofit) * sign;
+    const loss_3 = dist3 * fixed_leverage * percentage(entry3, stoploss) * sign;
+    const profit_3 = dist3 * fixed_leverage * percentage(entry3, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_3.toFixed(2) + ' : ' + '$' + profit_3.toFixed(2);
 
     // -------------------------------- entry 4 -------------------------------- 
     output1.innerHTML += '<br>' + '4: (' + entry4.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + leverage(risk, percentage(entry4, stoploss)) + 'x';    
+    output1.innerHTML += ' ' + fixed_leverage + 'x';    
     output1.innerHTML += ' $' + dist4;
 
-    const loss_4 = dist4 * leverage(risk, percentage(entry4, stoploss)) * percentage(entry4, stoploss) * sign;
-    const profit_4 = dist4 * leverage(risk, percentage(entry4, stoploss)) * percentage(entry4, takeprofit) * sign;
+    const loss_4 = dist4 * fixed_leverage * percentage(entry4, stoploss) * sign;
+    const profit_4 = dist4 * fixed_leverage * percentage(entry4, takeprofit) * sign;
     // output1.innerHTML += '<br> | $' + loss_4.toFixed(2) + ' : ' + '$' + profit_4.toFixed(2);
 
     // -------------------------------- stoploss | takeprofit -------------------------------- 
