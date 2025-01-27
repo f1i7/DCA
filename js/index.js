@@ -202,12 +202,12 @@ function output() {
         sign = -1;
     }
 
-    const fixed_leverage = (
+    const fixed_leverage = Math.floor((
         leverage(risk, percentage(entry1, stoploss)) * dist1 +
         leverage(risk, percentage(entry2, stoploss)) * dist2 +
         leverage(risk, percentage(entry3, stoploss)) * dist3 +
         leverage(risk, percentage(entry4, stoploss)) * dist4
-    ) / (dist1 + dist2 + dist3 + dist4);
+    ) / (dist1 + dist2 + dist3 + dist4));
 
     // const fixed_leverage = (
     //     leverage(risk, percentage(entry1, stoploss))+
