@@ -100,7 +100,8 @@ function percentage(entry, exit) {
 
 // --------------------- leverage function -----------------------
 function leverage(effective_change, price_change) {
-    return Math.abs(parseInt((effective_change / (price_change * 100))));
+    let result = Math.abs(parseInt((effective_change / (price_change * 100))));
+    return result === 0 ? 1 : result;
 }
 
 // --------------------- clear all function -----------------------
