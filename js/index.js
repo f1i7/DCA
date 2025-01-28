@@ -139,7 +139,7 @@ function output() {
     document.querySelector(".item").innerHTML = '';
     const parentDiv = document.querySelector(".item");
     const newOutput = document.createElement("p");
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 4; i++) {
         const newOutput = document.createElement("p");
         newOutput.id = `output${i}`;
         parentDiv.appendChild(newOutput);
@@ -171,8 +171,6 @@ function output() {
     const dist3_percentage = parseInt(document.getElementById('dist3').value) / 100;
     const dist4_percentage = parseInt(document.getElementById('dist4').value) / 100;
 
-    console.log(dist4_percentage);
-
     const margin = parseFloat(document.getElementById('input0').value);
     const dist1 = margin * dist1_percentage;
     const dist2 = margin * dist2_percentage;
@@ -188,9 +186,6 @@ function output() {
     // ----------------------------------------------------------------------------------
     //                                OUTPUT 1
     // ----------------------------------------------------------------------------------
-    const output1 = document.getElementById("output1");
-    output1.innerHTML += 'ENTRIES:<br>';
-
     const value1 = parseFloat(input1.value) || 0;
     const value2 = parseFloat(input2.value) || 0;
     let sign = 1;
@@ -216,9 +211,12 @@ function output() {
     //     leverage(risk, percentage(entry4, stoploss))    
     // ) / 4;
 
+    const output1 = document.getElementById("output1");
+    output1.innerHTML += 'ENTRIES: ' + fixed_leverage + 'x' + '<br>';
+
     // -------------------------------- entry 1 --------------------------------
     output1.innerHTML += '1: (' + entry1.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + fixed_leverage + 'x';
+    // output1.innerHTML += ' ' + fixed_leverage + 'x';
     output1.innerHTML += ' $' + dist1;
     
     const loss_1 = dist1 * fixed_leverage * percentage(entry1, stoploss) * sign;
@@ -227,7 +225,7 @@ function output() {
 
     // -------------------------------- entry 2 -------------------------------- 
     output1.innerHTML += '<br>' + '2: (' + entry2.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + fixed_leverage + 'x';
+    // output1.innerHTML += ' ' + fixed_leverage + 'x';
     output1.innerHTML += ' $' + dist2;
 
     const loss_2 = dist2 * fixed_leverage * percentage(entry2, stoploss) * sign;
@@ -236,7 +234,7 @@ function output() {
 
     // -------------------------------- entry 3 -------------------------------- 
     output1.innerHTML += '<br>' + '3: (' + entry3.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + fixed_leverage + 'x';
+    // output1.innerHTML += ' ' + fixed_leverage + 'x';
     output1.innerHTML += ' $' + dist3;
 
     const loss_3 = dist3 * fixed_leverage * percentage(entry3, stoploss) * sign;
@@ -245,7 +243,7 @@ function output() {
 
     // -------------------------------- entry 4 -------------------------------- 
     output1.innerHTML += '<br>' + '4: (' + entry4.toFixed(precision) + ')';
-    output1.innerHTML += ' ' + fixed_leverage + 'x';    
+    // output1.innerHTML += ' ' + fixed_leverage + 'x';    
     output1.innerHTML += ' $' + dist4;
 
     const loss_4 = dist4 * fixed_leverage * percentage(entry4, stoploss) * sign;
@@ -276,7 +274,9 @@ function output() {
     output2.innerHTML += 'PROFIT/LOSS & RATIO:<br>';
     output2.innerHTML += '1: ';
     output2.innerHTML += ' [$' + total_loss.toFixed(2) + ' : $' + total_profit.toFixed(2) + ']';
-    output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    // output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    output2.innerHTML += ' | [' + ((total_loss / margin) * 100).toFixed(2) + '%';
+    output2.innerHTML += ' : ' + ((total_profit / margin) * 100).toFixed(2) + '% ]';
 
     // --------------------------- pnl 2 ---------------------------  
     total_loss = loss_1 + loss_2;
@@ -284,31 +284,85 @@ function output() {
 
     output2.innerHTML += '<br>2: ';
     output2.innerHTML += ' [$' + total_loss.toFixed(2) + ' : $' + total_profit.toFixed(2) + ']';
-    output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    // output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    output2.innerHTML += ' | [' + ((total_loss / margin) * 100).toFixed(2) + '%';
+    output2.innerHTML += ' : ' + ((total_profit / margin) * 100).toFixed(2) + '% ]';
+
     // --------------------------- pnl 3 ---------------------------  
     total_loss = loss_1 + loss_2 + loss_3;
     total_profit = profit_1 + profit_2 + profit_3;
 
     output2.innerHTML += '<br>3: ';
     output2.innerHTML += ' [$' + total_loss.toFixed(2) + ' : $' + total_profit.toFixed(2) + ']';
-    output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    // output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    output2.innerHTML += ' | [' + ((total_loss / margin) * 100).toFixed(2) + '%';
+    output2.innerHTML += ' : ' + ((total_profit / margin) * 100).toFixed(2) + '% ]';
+
     // --------------------------- pnl 4 ---------------------------  
     total_loss = loss_1 + loss_2 + loss_3 + loss_4;
     total_profit = profit_1 + profit_2 + profit_3 + profit_4;
 
     output2.innerHTML += '<br>4: ';
     output2.innerHTML += ' [$' + total_loss.toFixed(2) + ' : $' + total_profit.toFixed(2) + ']';
-    output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    // output2.innerHTML += ' | ' + Math.abs((total_profit / total_loss).toFixed(2));
+    output2.innerHTML += ' | [' + ((total_loss / margin) * 100).toFixed(2) + '%';
+    output2.innerHTML += ' : ' + ((total_profit / margin) * 100).toFixed(2) + '% ]';
 
     // ----------------------------------------------------------------------------------
     //                                OUTPUT 3
     // ----------------------------------------------------------------------------------
+    let entry1_zero_loss;
+    let entry2_zero_loss;
+    let entry3_zero_loss;
+    let entry4_zero_loss;
+    const zero_loss_precision = 0.1;
+
+    for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
+        if (percentage(entry1, fib(fib0, fib1, i)) * sign < 0) {
+            entry1_zero_loss = fib(fib0, fib1, i - 0.05);
+            break;
+        }
+    }
+
+    for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
+        if (percentage(entry2, fib(fib0, fib1, i)) * sign < 0) {
+            entry2_zero_loss = fib(fib0, fib1, i - 0.05);
+            break;
+        }
+    }
+
+    for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
+        if (percentage(entry3, fib(fib0, fib1, i)) * sign < 0) {
+            entry3_zero_loss = fib(fib0, fib1, i - 0.05);
+            break;
+        }
+    }
+
+    for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
+        if (percentage(entry4, fib(fib0, fib1, i)) * sign < 0) {
+            entry4_zero_loss = fib(fib0, fib1, i - 0.05);
+            break;
+        }
+    }
+
     const output3 = document.getElementById("output3");
 
-    output3.innerHTML += 'margin: $' + margin;
-    output3.innerHTML += '<br>SL Fib: ' + stoploss_level;
-    output3.innerHTML += '<br>TP Fib: ' + takeprofit_level;
-    output3.innerHTML += '<br>risk: ' + risk + '%';
+    output3.innerHTML = 'ZERO LOSS:';
+    output3.innerHTML += '<br>1: (' + entry1_zero_loss.toFixed(precision) + ')';
+    output3.innerHTML += '<br>2: (' + entry2_zero_loss.toFixed(precision) + ')';
+    output3.innerHTML += '<br>3: (' + entry3_zero_loss.toFixed(precision) + ')';
+    output3.innerHTML += '<br>4: (' + entry4_zero_loss.toFixed(precision) + ')';
+
+    // ----------------------------------------------------------------------------------
+    //                                OUTPUT 4
+    // ----------------------------------------------------------------------------------
+    const output4 = document.getElementById("output4");
+
+    output4.innerHTML += 'Margin: $' + margin;
+    output4.innerHTML += '<br>SL Fib: ' + stoploss_level;
+    output4.innerHTML += '<br>TP Fib: ' + takeprofit_level;
+    output4.innerHTML += '<br>Risk: ' + risk + '%';
+    output4.innerHTML += '<br>Ratio: ' + Math.abs((total_profit / total_loss).toFixed(2));
 
 
 
@@ -316,6 +370,4 @@ function output() {
     // output2.innerHTML += '<br>dist2: $' + dist2.toFixed(2);
     // output2.innerHTML += '<br>dist3: $' + dist3.toFixed(2);
     // output2.innerHTML += '<br>dist4: $' + dist4.toFixed(2);
-
-    output2.innerHTML += '<br>';
 }
