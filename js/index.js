@@ -253,8 +253,8 @@ function output() {
 
     // -------------------------------- stoploss | takeprofit -------------------------------- 
     output1.innerHTML += '<br>';
-    output1.innerHTML += '<br>SL: (' + stoploss.toFixed(precision) + ')';
     output1.innerHTML += '<br>TP: (' + takeprofit.toFixed(precision) + ')';
+    output1.innerHTML += '<br>SL: (' + stoploss.toFixed(precision) + ')';
 
 
 
