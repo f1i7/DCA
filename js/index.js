@@ -8,8 +8,8 @@ const fibStops = [-0.382, -0.5, -0.236];
 const fibProfits = [1.0, 1.272, 1.414, 1.618, 2.618, 3.618];
 
 document.getElementById('input0').value = 10;
-document.getElementById('input1').value = '0.9867';
-document.getElementById('input2').value = '0.9817';
+document.getElementById('input1').value = '271.02';
+document.getElementById('input2').value = '244.81';
 document.getElementById('input3').value = -0.5;
 document.getElementById('input4').value = 1.618;
 
@@ -319,29 +319,59 @@ function output() {
     const zero_loss_precision = 0.1;
 
     for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
-        if (percentage(entry1, fib(fib0, fib1, i)) * sign < 0) {
-            entry1_zero_loss = fib(fib0, fib1, i - 0.05);
+        const profit_1 = dist1 * fixed_leverage * percentage(entry1, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const total_profit = profit_1; 
+
+        // console.log(i.toFixed(2), 'zero(): total profit: $', total_profit.toFixed(precision), 'level: ', fib(fib0, fib1, i.toFixed(2)).toFixed(2));
+
+        if (total_profit > 0) {
+            entry1_zero_loss = fib(fib0, fib1, i.toFixed(2));
             break;
         }
     }
 
     for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
-        if (percentage(entry2, fib(fib0, fib1, i)) * sign < 0) {
-            entry2_zero_loss = fib(fib0, fib1, i - 0.05);
+        const profit_1 = dist1 * fixed_leverage * percentage(entry1, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const profit_2 = dist2 * fixed_leverage * percentage(entry2, fib(fib0, fib1, i.toFixed(2))) * sign;
+
+        const total_profit = profit_1 + profit_2; 
+
+        // console.log(i.toFixed(2), 'zero(): total profit: $', total_profit.toFixed(precision), 'level: ', fib(fib0, fib1, i.toFixed(2)).toFixed(2));
+
+        if (total_profit > 0) {
+            entry2_zero_loss = fib(fib0, fib1, i.toFixed(2));
             break;
         }
     }
 
     for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
-        if (percentage(entry3, fib(fib0, fib1, i)) * sign < 0) {
-            entry3_zero_loss = fib(fib0, fib1, i - 0.05);
+        const profit_1 = dist1 * fixed_leverage * percentage(entry1, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const profit_2 = dist2 * fixed_leverage * percentage(entry2, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const profit_3 = dist3 * fixed_leverage * percentage(entry3, fib(fib0, fib1, i.toFixed(2))) * sign;
+
+
+        const total_profit = profit_1 + profit_2 + profit_3;
+
+        // console.log(i.toFixed(2), 'zero(): total profit: $', total_profit.toFixed(precision), 'level: ', fib(fib0, fib1, i.toFixed(2)).toFixed(2));
+
+        if (total_profit > 0) {
+            entry3_zero_loss = fib(fib0, fib1, i.toFixed(2));
             break;
         }
     }
 
     for (let i = -1; i.toFixed(2) <= 1; i += zero_loss_precision) {
-        if (percentage(entry4, fib(fib0, fib1, i)) * sign < 0) {
-            entry4_zero_loss = fib(fib0, fib1, i - 0.05);
+        const profit_1 = dist1 * fixed_leverage * percentage(entry1, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const profit_2 = dist2 * fixed_leverage * percentage(entry2, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const profit_3 = dist3 * fixed_leverage * percentage(entry3, fib(fib0, fib1, i.toFixed(2))) * sign;
+        const profit_4 = dist4 * fixed_leverage * percentage(entry4, fib(fib0, fib1, i.toFixed(2))) * sign;
+
+        const total_profit = profit_1 + profit_2 + profit_3 + profit_4;
+
+        // console.log(i.toFixed(2), 'zero(): total profit: $', total_profit.toFixed(precision), 'level: ', fib(fib0, fib1, i.toFixed(2)).toFixed(2));
+
+        if (total_profit > 0) {
+            entry4_zero_loss = fib(fib0, fib1, i.toFixed(2));
             break;
         }
     }
@@ -353,6 +383,11 @@ function output() {
     output3.innerHTML += '<br>2: (' + entry2_zero_loss.toFixed(precision) + ')';
     output3.innerHTML += '<br>3: (' + entry3_zero_loss.toFixed(precision) + ')';
     output3.innerHTML += '<br>4: (' + entry4_zero_loss.toFixed(precision) + ')';
+
+    // output3.innerHTML += '<br>1: (' + entry1_zero_loss.toFixed(precision) + ')';
+    // output3.innerHTML += '<br>2: (' + entry2_zero_loss.toFixed(precision) + ')';
+    // output3.innerHTML += '<br>3: (' + entry3_zero_loss.toFixed(precision) + ')';
+    // output3.innerHTML += '<br>4: (' + entry4_zero_loss.toFixed(precision) + ')';
 
     // ----------------------------------------------------------------------------------
     //                                OUTPUT 4
